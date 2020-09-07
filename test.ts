@@ -182,24 +182,19 @@ function log(target: any, key: any, descriptor: any) {
     console.log(`${descriptor} ...`)
     console.log(target.val1)
 }
-class P {
-    val1: string = "val1"
-    val2: string = "val2"
-    constructor() {
-        console.log('object instance')
-    }
-    @log
-    foo() {
-        console.log('Do something')
-    }
-}
-let p: P  = new P()
+// class P {
+//     val1: string = "val1"
+//     val2: string = "val2"
+//     constructor() {
+//         console.log('object instance')
+//     }
+//     @log
+//     foo() {
+//         console.log('Do something')
+//     }
+// }
+// let p: P  = new P()
 // p.foo()
-// console.log(P.prototype === temple)
-
-
-
-p.foo()
 
 function f() {
   console.log("f(): evaluated");
@@ -218,8 +213,8 @@ function g() {
   }
 }
 
-class c {
-    @f()
-    @g()
-    method() {}
-}
+// class c {
+//     @f()
+//     @g()
+//     method() {}
+// }

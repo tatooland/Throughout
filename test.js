@@ -180,28 +180,30 @@ function log(target, key, descriptor) {
     console.log(descriptor + " ...");
     console.log(target.val1);
 }
-var P = /** @class */ (function () {
-    function P() {
-        this.val1 = "val1";
-        this.val2 = "val2";
-        console.log('object instance');
-    }
-    P.prototype.foo = function () {
-        console.log('Do something');
-    };
-    __decorate([
-        log
-    ], P.prototype, "foo", null);
-    return P;
-}());
-var p = new P();
+// class P {
+//     val1: string = "val1"
+//     val2: string = "val2"
+//     constructor() {
+//         console.log('object instance')
+//     }
+//     @log
+//     foo() {
+//         console.log('Do something')
+//     }
+// }
+// let p: P  = new P()
 // p.foo()
-// console.log(P.prototype === temple)
-p.foo();
 function f() {
     console.log("f(): evaluated");
-    return function (target, propertyKey, descriptor) {
-        console.log("f(): called");
+    return function (target, key, descriptor) {
+        var original = descriptor.value;
+        descriptor.value = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            console.log("[f]before " + key + " called", args);
+        };
     };
 }
 function g() {
@@ -210,13 +212,8 @@ function g() {
         console.log("g(): called");
     };
 }
-var c = /** @class */ (function () {
-    function c() {
-    }
-    c.prototype.method = function () { };
-    __decorate([
-        f(),
-        g()
-    ], c.prototype, "method", null);
-    return c;
-}());
+// class c {
+//     @f()
+//     @g()
+//     method() {}
+// }
