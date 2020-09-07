@@ -197,14 +197,15 @@ function log(target: any, key: any, descriptor: any) {
 // p.foo()
 
 function f() {
-  console.log("f(): evaluated");
-  return function (target: any, key: string, descriptor: PropertyDescriptor) {
-      const original = descriptor.value
-      descriptor.value = function(...args: any[]){
-          console.log(`[f]before ${key} called`, args)
+  console.log("f(): evaluated")
+  return function (
+      target: any, 
+      key: string, 
+      descriptor: PropertyDescriptor
+      ) {
+          console.log("f(): called")
       }
   }
-}
 
 function g() {
   console.log("g(): evaluated");
@@ -213,8 +214,36 @@ function g() {
   }
 }
 
-// class c {
-//     @f()
-//     @g()
-//     method() {}
-// }
+class C {
+    @f()
+    @g()
+    method() {
+        console.log('hello class c')
+    }
+    @f()
+    @g()
+    fun() {
+        console.log('kkk')
+    }
+}
+
+function classDecorator< T extends { new (...args: any[]): {} }>(
+    constructor: T
+) {
+    return class extends constructor {
+        newProperty = "new property"
+        // hello = "override"
+    }
+}
+
+
+@classDecorator
+class GREETER {
+    property: string = "property"
+    hello: string = "null"
+    constructor(m: string) {
+        this.hello = m
+    }
+}
+
+console.log(new GREETER("world"))

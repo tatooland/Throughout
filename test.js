@@ -196,14 +196,7 @@ function log(target, key, descriptor) {
 function f() {
     console.log("f(): evaluated");
     return function (target, key, descriptor) {
-        var original = descriptor.value;
-        descriptor.value = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            console.log("[f]before " + key + " called", args);
-        };
+        console.log("f(): called");
     };
 }
 function g() {
@@ -212,8 +205,46 @@ function g() {
         console.log("g(): called");
     };
 }
-// class c {
-//     @f()
-//     @g()
-//     method() {}
-// }
+var C = /** @class */ (function () {
+    function C() {
+    }
+    C.prototype.method = function () {
+        console.log('hello class c');
+    };
+    C.prototype.fun = function () {
+        console.log('kkk');
+    };
+    __decorate([
+        f(),
+        g()
+    ], C.prototype, "method", null);
+    __decorate([
+        f(),
+        g()
+    ], C.prototype, "fun", null);
+    return C;
+}());
+function classDecorator(constructor) {
+    return /** @class */ (function (_super) {
+        __extends(class_1, _super);
+        function class_1() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.newProperty = "new property";
+            return _this;
+            // hello = "override"
+        }
+        return class_1;
+    }(constructor));
+}
+var GREETER = /** @class */ (function () {
+    function GREETER(m) {
+        this.property = "property";
+        this.hello = "null";
+        this.hello = m;
+    }
+    GREETER = __decorate([
+        classDecorator
+    ], GREETER);
+    return GREETER;
+}());
+console.log(new GREETER("world"));
