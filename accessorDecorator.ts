@@ -23,6 +23,9 @@ function configurable(value: boolean) {
         propertyKey: string,
         descriptor: PropertyDescriptor 
     ) {
+        console.log(`${target} ${propertyKey}`)
+        console.log(target[propertyKey])
+        console.log("==================")
         descriptor.configurable = value
     }
 }
