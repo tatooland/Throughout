@@ -7,10 +7,12 @@ class Point {
     }
     @configurable(false)
     get x() {
+        console.log("configurable decorator " + this._x)
         return this._x
     }
     @configurable(false)
     get y() {
+        console.log("configurable decorator " + this._y)
         return this._y
     }
 }
@@ -24,3 +26,7 @@ function configurable(value: boolean) {
         descriptor.configurable = value
     }
 }
+
+let p: Point = new Point(15, 15)
+console.log(p.x)
+console.log(p.y)

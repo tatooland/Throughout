@@ -14,6 +14,7 @@ var Point = /** @class */ (function () {
     }
     Object.defineProperty(Point.prototype, "x", {
         get: function () {
+            console.log("configurable decorator " + this._x);
             return this._x;
         },
         enumerable: false,
@@ -21,6 +22,7 @@ var Point = /** @class */ (function () {
     });
     Object.defineProperty(Point.prototype, "y", {
         get: function () {
+            console.log("configurable decorator " + this._y);
             return this._y;
         },
         enumerable: false,
@@ -39,3 +41,6 @@ function configurable(value) {
         descriptor.configurable = value;
     };
 }
+var p = new Point(15, 15);
+console.log(p.x);
+console.log(p.y);
